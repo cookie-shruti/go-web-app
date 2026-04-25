@@ -1,0 +1,28 @@
+apiVersion: apps/v1              # Kubernetes API version for Deployment
+kind: Deployment                # Resource type (manages pods)
+
+metadata:
+  name: go-web-app              # ⚠️ Deployment name (must be unique in namespace)
+  labels:
+    app: go-web-app             # ⚠️ Label (used for selection & grouping)
+
+spec:
+  replicas: 1                   # Number of pod instances to run
+
+  selector:
+    matchLabels:
+      app: go-web-app           # ⚠️ MUST match pod template labels (else pods won't link)
+
+  template:                     # Pod template (defines how pods are created)
+    metadata:
+      labels:
+        app: go-web-app         # ⚠️ MUST match selector above (VERY IMPORTANT)
+
+    spec:
+      containers:
+      - name: go-web-app        # Container name inside pod
+
+        image: shrutibist123/go-web-app:v1   # ⚠️ Docker image (must exist & correct tag)
+
+        ports:
+        - containerPort: 8080  # App runs on this port inside container
